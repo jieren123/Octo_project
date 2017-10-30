@@ -17,9 +17,12 @@ Octo
 	 7 8 9 E     a s d f
 	 A 0 B F     z x c v
 ```
+
 - Control Flow
-The main control flow is if-then statement. The subroutine is between the loop and again. 
+
+The main control flow is if-then statement. 
 The player can press the letter W to up and lift his arms up, letter S to down and lay down his arms, letter A to left and change his face to left and letter D and change his face to right, also moving by 2 pixels. 
+Create a basic main loop and the subroutine is to execute movement. When again is encountered, Chip8 will skip back to the matchong loop and resume from that point.
 (Example of Free Dancing)
 ```
 : main	
@@ -40,7 +43,40 @@ The player can press the letter W to up and lift his arms up, letter S to down a
 		if v2 == 8 then v1 += 2 
 
 	again
-```	
+```
+
+- Parsing 
+
+It beigns with colon (:) and end with semi-colon(;)  Move-arrow-right is starting by inserting subroutine calls into main loop.
+Also anything after the hash symbol (#) is ignored by it.
+```
+: move-arrow-right
+	va := righta
+	vb := rightb 
+	
+	va += 5 
+	
+	i := arrow-right
+	sprite righta rightb 5
+	righta := va
+	rightb := vb
+	i := arrow-right
+	sprite righta rightb 5
+	sync
+;
+
+: main 
+	righta := 0
+	rightb := 0
+	i := arrow-right
+	sprite righta rightb 5
+	loop 
+		move-arrow-right
+		#dancing
+	again
+
+```
+
 ## Reference 
 
 - [Octo Chip-8](https://github.com/JohnEarnest/Octo) the most accurate Chip-8 reference online.
