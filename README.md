@@ -47,8 +47,16 @@ Create a basic main loop and the subroutine is to execute movement. When again i
 
 - Parsing 
 
-It beigns with colon (:) and end with semi-colon(;)  Move-arrow-right is starting by inserting subroutine calls into main loop.
-Also anything after the hash symbol (#) is ignored by it.
+1.Register map
+
+Chip8 has 16 v-registers, v0-vf, which we will use to store state. In my game, I use righta and rightb to keep track of the right-arrow position.
+```
+:alias righta v3
+:alias rightb v4
+```
+2.Scope
+Scope refers to the visibility of variables.
+In chip8, it beigns with colon (:) and end with semi-colon(;)  Move-arrow-right is starting by inserting subroutine calls into main loop.
 ```
 : move-arrow-right
 	va := righta
@@ -76,6 +84,8 @@ Also anything after the hash symbol (#) is ignored by it.
 	again
 
 ```
+Also anything after the hash symbol (#) is ignored by it.
+
 
 ## Reference 
 
