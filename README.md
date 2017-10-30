@@ -87,7 +87,7 @@ In chip8, it beigns with colon (:) and end with semi-colon(;)  Move-arrow-right 
 ```
 Also anything after the hash symbol (#) is ignored by it.
 
-- Other 
+- Others 
 
 1. Moving slow and fast 
 In order to make objects move in whole numbers of pixels per second. This technique is based on fixed-point arithmetic and the flag(vf) register. 
