@@ -54,6 +54,7 @@ Chip8 has 16 v-registers, v0-vf, which we will use to store state. In my game, I
 :alias righta v3
 :alias rightb v4
 ```
+
 2.Scope
 Scope refers to the visibility of variables.
 In chip8, it beigns with colon (:) and end with semi-colon(;)  Move-arrow-right is starting by inserting subroutine calls into main loop.
@@ -85,6 +86,64 @@ In chip8, it beigns with colon (:) and end with semi-colon(;)  Move-arrow-right 
 
 ```
 Also anything after the hash symbol (#) is ignored by it.
+
+- Other 
+
+1. Moving slow and fast 
+In order to make objects move in whole numbers of pixels per second. This technique is based on fixed-point arithmetic and the flag(vf) register. 
+
+```
+: sync
+	loop
+		vf := delay
+		if vf != 0 then
+	again
+
+	# delay for up to 3/60th of a second
+	# using the fixed-rate delay timer
+	vf := 3
+	delay := vf
+;
+```
+
+2. Mutilple movement 
+In main loop:
+```
+	righta := 0
+	rightb := 0
+
+	lefta := 0
+	leftb := 0
+
+	upa := 0
+	upb := 0
+
+	downa := 0
+	downb := 0
+
+
+	i := arrow-right
+	sprite righta rightb 5
+	
+	i := arrow-left
+	sprite lefta leftb 5
+
+	i := arrow-up
+	sprite upa upb 5
+
+	i := arrow-down
+	sprite downa downb 5
+
+	i := facing-left 
+	sprite leftx lefty 12
+	
+	loop 
+		move-arrow-right
+		move-arrow-left
+		move-arrow-up
+		move-arrow-down
+	again
+```
 
 
 ## Reference 
