@@ -1,0 +1,236 @@
+: facing-left
+	0b00001100
+	0b00001000
+	0b01111110
+	0b10111101
+	0b11101111
+	0b01111110
+	0b10011000
+	0b10111100
+	0b11111111
+	0b00111101
+	0b00111101
+	0b00100100
+
+: facing-right
+	0b01100000
+	0b00100000
+	0b01111110
+	0b10111101
+	0b11110111
+	0b01111110
+	0b00011001
+	0b00111101
+	0b11111111
+	0b10111100
+	0b10111100
+	0b00100100
+
+: facing-up
+	0b00111000
+	0b00010000
+	0b01111110
+	0b10111101
+	0b11101111
+	0b01111110
+	0b10011001
+	0b10111101
+	0b11111111
+	0b00111100
+	0b00111100
+	0b00100100
+
+: facing-down
+	0b00111000
+	0b00010000
+	0b01111110
+	0b10111101
+	0b11101111
+	0b01111110
+	0b00011000
+	0b00111100
+	0b11111111
+	0b10111101
+	0b10111101
+	0b00100100
+
+: arrow-right
+	0b00001000
+	0b00000100
+	0b11111110
+	0b00000100
+	0b00001000
+: arrow-left
+	0b00100000
+	0b01000000
+	0b11111110
+	0b01000000
+	0b00100000
+
+: arrow-up
+	0b00010000
+	0b00111000
+	0b01111100
+	0b00010000
+	0b00010000
+
+: arrow-down
+	0b00010000
+	0b00010000
+	0b01111100
+	0b00111000
+	0b00010000
+
+
+:alias righta v3
+:alias rightb v4
+
+:alias lefta v5
+:alias leftb v6
+
+:alias upa v7
+:alias upb v8
+
+:alias downa v9
+:alias downb v0
+
+: move-arrow-right
+	va := righta
+	vb := rightb 
+	
+	va += 5 
+	
+	i := arrow-right
+	sprite righta rightb 5
+	righta := va
+	rightb := vb
+	i := arrow-right
+	sprite righta rightb 5
+	sync
+;
+
+
+: move-arrow-left
+	vc := lefta
+	vd := leftb 
+	
+	vc += 10
+	
+	i := arrow-left
+	sprite lefta leftb 5
+	lefta := vc
+	leftb := vd
+	i := arrow-left
+	sprite lefta leftb 5
+	sync
+;
+
+
+: move-arrow-up
+	ve := upa
+	vf := upb 
+	
+	ve += 15
+	
+	i := arrow-up
+	sprite upa upb 5
+	upa := ve
+	upb := vf
+	i := arrow-up
+	sprite upa upb 5
+	sync
+;
+
+: move-arrow-down
+	va := downa
+	vb := downb 
+	
+	va += 20
+	
+	i := arrow-down
+	sprite downa downb 5
+	downa := va
+	downb := vb
+	i := arrow-down
+	sprite downa downb 5
+	sync
+;
+
+
+: sync
+	loop
+		vf := delay
+		if vf != 0 then
+	again
+
+	# delay for up to 3/60th of a second
+	# using the fixed-rate delay timer
+	vf := 4
+	delay := vf
+;
+
+
+
+# don't change 
+
+:alias leftx v1
+:alias lefty v2
+
+: dancing 
+	v0 := leftx
+	v1 := lefty
+
+	v2 := 7 if v2 key then i := facing-left
+	v2 := 7 if v2 key then v0 += -2
+	v2 := 9 if v2 key then i := facing-right 
+	v2 := 9 if v2 key then v0 +=  2 
+	v2 := 5 if v2 key then i := facing-down
+	v2 := 5 if v2 key then v1 += -2
+	v2 := 8 if v2 key then i := facing-up
+	v2 := 8 if v2 key then v1 += 2 	
+
+	i := facing-left
+	sprite leftx lefty 12
+	leftx     := v0
+	lefty     := v1
+	sprite leftx lefty 12
+;
+
+: main
+	righta := 0
+	rightb := 0
+
+	lefta := 0
+	leftb := 0
+
+	upa := 0
+	upb := 0
+
+	downa := 0
+	downb := 0
+
+	leftx := 30
+	lefty := 20
+
+	i := arrow-right
+	sprite righta rightb 5
+	
+	i := arrow-left
+	sprite lefta leftb 5
+
+	i := arrow-up
+	sprite upa upb 5
+
+	i := arrow-down
+	sprite downa downb 5
+
+	i := facing-left 
+	sprite leftx lefty 12
+	
+	loop 
+		move-arrow-right
+		move-arrow-left
+		move-arrow-up
+		move-arrow-down
+		dancing
+	again
